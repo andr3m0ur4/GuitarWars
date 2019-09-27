@@ -14,7 +14,7 @@
 
     // Armazena a frase-secreta criptografada em uma variável de sessão
     $_SESSION['pass_phrase'] = SHA1 ( $pass_phrase );
-
+    
     // Cria a imagem
     $img = imagecreatetruecolor ( CAPTCHA_WIDTH, CAPTCHA_HEIGHT );
 

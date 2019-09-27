@@ -33,7 +33,7 @@
                 $screenshot_type = $_FILES['screenshot']['type'];
                 $screenshot_size = $_FILES['screenshot']['size']; 
 
-                // Verifica a frase-passe do CAPTCHA para verificação
+                // Verifica a frase-secreta do CAPTCHA para verificação
                 $user_pass_phrase = SHA1 ( $_POST['verify'] );
                 if ( $_SESSION['pass_phrase'] == $user_pass_phrase ) {
                     if ( !empty ( $name ) && is_numeric ( $score ) && !empty ( $screenshot ) ) {
@@ -58,7 +58,7 @@
                                         <p>
                                             <strong>Nome:</strong> {$name}<br />
                                             <strong>Pontuação:</strong> {$score}<br />
-                                            <img src='{GW_UPLOADPATH}{$screenshot}' alt='Score image' />
+                                            <img src='" . GW_UPLOADPATH . "{$screenshot}' alt='Score image' />
                                         </p>
                                         <p>
                                             <a href='index.php'>&lt;&lt; Voltar à maiores pontuações</a>
@@ -79,7 +79,7 @@
                         } else {
                             echo "<p class='error'>
                                     A captura de tela deve ser um arquivo de imagem GIF, JPEG, ou PNG não maior
-                                    que {( GW_MAXFILESIZE / 1024 )} KB de tamanho.
+                                    que " . ( GW_MAXFILESIZE / 1024 ) . " KB de tamanho.
                                 </p>";
                         }
 
@@ -92,7 +92,7 @@
                     }
                 } else {
                     echo '<p class="error">
-                            Por favor digite a frase-passe de verificação exatamente como mostrado.
+                            Por favor digite a frase-secreta de verificação exatamente como mostrado.
                         </p>';
                 }
             }

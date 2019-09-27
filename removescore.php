@@ -1,76 +1,81 @@
 <?php
-  require_once('authorize.php');
+    require_once ( 'config/authorize.php' );
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Guitar Wars - Remove a High Score</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
-<body>
-  <h2>Guitar Wars - Remove a High Score</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <title>Guitar Wars - Remover uma Maior Pontuação</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Aplicação WEB para armazenar pontuações de jogadores" />
+        <meta name="keywords" content="php mysql guitar warrior">
+        <meta name="autor" content="André Moura">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+    </head>
+    <body>
+        <h2>Guitar Wars - Remover uma Maior Pontuação</h2>
 
-<?php
-  require_once('appvars.php');
-  require_once('connectvars.php');
+        <?php
+            require_once ( 'config/appvars.php' );
+            require_once ( 'config/connectvars.php' );
 
-  if (isset($_GET['id']) && isset($_GET['date']) && isset($_GET['name']) && isset($_GET['score']) && isset($_GET['screenshot'])) {
-    // Grab the score data from the GET
-    $id = $_GET['id'];
-    $date = $_GET['date'];
-    $name = $_GET['name'];
-    $score = $_GET['score'];
-    $screenshot = $_GET['screenshot'];
-  }
-  else if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['score'])) {
-    // Grab the score data from the POST
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $score = $_POST['score'];
-  }
-  else {
-    echo '<p class="error">Sorry, no high score was specified for removal.</p>';
-  }
+            if ( isset ( $_GET['id'] ) && isset ( $_GET['date'] ) && isset ( $_GET['name'] ) && 
+                isset ( $_GET['score'] ) && isset ( $_GET['screenshot'] ) ) {
+            
+                // Obtém os dados de pontuação do GET
+                $id = $_GET['id'];
+                $date = $_GET['date'];
+                $name = $_GET['name'];
+                $score = $_GET['score'];
+                $screenshot = $_GET['screenshot'];
+            } else if ( isset ( $_POST['id'] ) && isset ( $_POST['name'] ) && isset ( $_POST['score'] ) ) {
+                // Obtém os dados de pontuação do POST
+                $id = $_POST['id'];
+                $name = $_POST['name'];
+                $score = $_POST['score'];
+            } else {
+                echo '<p class="error">Desculpa, nenhum recorde foi especificado para remoção.</p>';
+            }
 
-  if (isset($_POST['submit'])) {
-    if ($_POST['confirm'] == 'Yes') {
-      // Delete the screen shot image file from the server
-      @unlink(GW_UPLOADPATH . $screenshot);
+            if ( isset ( $_POST['submit'] ) ) {
+                if ( $_POST['confirm'] == 'Yes' ) {
+                    // Excluir o arquivo de imagem de captura de tela do servidor
+                    @unlink ( GW_UPLOADPATH . $screenshot );
 
-      // Connect to the database
-      $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME); 
+                    // Conecta-se ao banco de dados
+                    $dbc = mysqli_connect ( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME ); 
 
-      // Delete the score data from the database
-      $query = "DELETE FROM guitarwars WHERE id = $id LIMIT 1";
-      mysqli_query($dbc, $query);
-      mysqli_close($dbc);
+                    // Excluir os dados de pontuação do banco de dados
+                    $query = "DELETE FROM guitarwars WHERE id = $id LIMIT 1";
+                    mysqli_query ( $dbc, $query );
+                    mysqli_close ( $dbc );
 
-      // Confirm success with the user
-      echo '<p>The high score of ' . $score . ' for ' . $name . ' was successfully removed.';
-    }
-    else {
-      echo '<p class="error">The high score was not removed.</p>';
-    }
-  }
-  else if (isset($id) && isset($name) && isset($date) && isset($score)) {
-    echo '<p>Are you sure you want to delete the following high score?</p>';
-    echo '<p><strong>Name: </strong>' . $name . '<br /><strong>Date: </strong>' . $date .
-      '<br /><strong>Score: </strong>' . $score . '</p>';
-    echo '<form method="post" action="removescore.php">';
-    echo '<input type="radio" name="confirm" value="Yes" /> Yes ';
-    echo '<input type="radio" name="confirm" value="No" checked="checked" /> No <br />';
-    echo '<input type="submit" value="Submit" name="submit" />';
-    echo '<input type="hidden" name="id" value="' . $id . '" />';
-    echo '<input type="hidden" name="name" value="' . $name . '" />';
-    echo '<input type="hidden" name="score" value="' . $score . '" />';
-    echo '</form>';
-  }
+                    // Confirmar sucesso com o usuário
+                    echo '<p>O recorde de ' . $score . ' para ' . $name . ' foi removido com sucesso.</p>';
+                } else {
+                    echo '<p class="error">O recorde não foi removido.</p>';
+                }
+            } else if ( isset ( $id ) && isset ( $name ) && isset ( $date ) && isset ( $score ) ) {
+                echo "<p>Você está certo de que deseja excluir o seguinte recorde?</p>
+                    <p>
+                        <strong>Nome: </strong>$name<br /><strong>Data: </strong>$date<br />
+                        <strong>Pontuação: </strong>$score
+                    </p>
+                    <form method='post' action='removescore.php'>
+                        <input type='radio' name='confirm' value='Yes' /> Sim 
+                        <input type='radio' name='confirm' value='No' checked='checked' /> Não <br />
+                        <button name='submit'>Enviar</button>
+                        <input type='hidden' name='id' value='{$id}' />
+                        <input type='hidden' name='name' value='{$name}' />
+                        <input type='hidden' name='score' value='{$score}' />
+                    </form>";
+            }
 
-  echo '<p><a href="admin.php">&lt;&lt; Back to admin page</a></p>';
-?>
+            echo '<p><a href="admin.php">&lt;&lt; Voltar para a página de administração</a></p>';
+        ?>
 
-</body> 
+    </body> 
 </html>
