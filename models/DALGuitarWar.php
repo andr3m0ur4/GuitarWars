@@ -69,6 +69,15 @@ class DALGuitarWar
 
 	}
 
+	public function update ( GuitarWar $guitar )
+	{
+		$sql = "UPDATE guitarwars SET approved = 1 WHERE id = {$guitar -> id}";
+
+		$this -> con -> query ( $sql );
+
+		return ( $this -> con -> affected_rows > 0 ) ? true : false;
+	}
+
 	public function getTotal ( $query )
 	{
 
