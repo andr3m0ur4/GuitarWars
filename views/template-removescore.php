@@ -2,7 +2,7 @@
 <html lang="pt-br">
     <head>
         <meta charset="utf-8" />
-        <title>Guitar Wars - Aprovar uma Maior Pontuação</title>
+        <title>Guitar Wars - Remover uma Maior Pontuação</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Aplicação WEB para armazenar pontuações de jogadores" />
@@ -12,32 +12,31 @@
         <link rel="stylesheet" type="text/css" href="assets/style.css" />
     </head>
     <body>
-        <h2>Guitar Wars - Aprovar uma Maior Pontuação</h2>
+        <h2>Guitar Wars - Remover uma Maior Pontuação</h2>
 
         <?php if ( $error ) : ?>
-            <p class="error">Desculpa, nenhuma pontuação foi especificada para aprovação.</p>
+            <p class="error">Desculpa, nenhum recorde foi especificado para remoção.</p>
         <?php endif; ?>
 
         <?php if ( $success ) : ?>
-            <!-- Confirma sucesso com o usuário -->
+            <!-- Confirmar sucesso com o usuário -->
             <p>
-                A pontuação de <?= $guitar -> score ?> para <?= $guitar -> name ?> foi aprovada com sucesso.
+                O recorde de <?= $guitar -> score ?> para <?= $guitar -> name ?> foi removido com sucesso.
             </p>
         <?php endif; ?>
 
-        <?php if ( $error_approve ) : ?>
-            <p class="error">Desculpa, ocorreu um problema ao aprovar o recorde.</p>
+        <?php if ( $error_remove ) : ?>
+            <p class="error">O recorde não foi removido.</p>
         <?php endif; ?>
 
-        <?php if ( $form_approve ) : ?>
-            <p>Você está certo de que deseja aprovar o seguinte recorde?</p>
+        <?php if ( $form_remove ) : ?>
+            <p>Você está certo de que deseja excluir o seguinte recorde?</p>
             <p>
                 <strong>Nome: </strong><?= $guitar -> name ?><br /><strong>Data: </strong><?= $guitar -> date ?><br />
                 <strong>Pontuação: </strong><?= $guitar -> score ?>
             </p>
-            <form method='post' action="admin.php?rota=approvescore">
-                <img src="<?= GW_UPLOADPATH . $guitar -> screenshot ?>" width='160' alt='Score image' /><br />
-                <input type='radio' name='confirm' value='Yes' /> Sim
+            <form method='post' action='admin.php?rota=removescore'>
+                <input type='radio' name='confirm' value='Yes' /> Sim 
                 <input type='radio' name='confirm' value='No' checked='checked' /> Não <br />
                 <button name='submit'>Enviar</button>
                 <input type='hidden' name='id' value="<?= $guitar -> id ?>" />
@@ -48,5 +47,5 @@
         <?php endif; ?>
 
         <p><a href="admin.php">&lt;&lt; Voltar para a página de administração</a></p>
-    </body>
+    </body> 
 </html>

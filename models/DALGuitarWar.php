@@ -78,6 +78,15 @@ class DALGuitarWar
 		return ( $this -> con -> affected_rows > 0 ) ? true : false;
 	}
 
+	public function delete ( $id )
+	{
+		$sql = "DELETE FROM guitarwars WHERE id = $id LIMIT 1";
+
+		$this -> con -> query ( $sql );
+
+		return ( $this -> con -> affected_rows > 0 ) ? true : false;
+	}
+
 	public function getTotal ( $query )
 	{
 
