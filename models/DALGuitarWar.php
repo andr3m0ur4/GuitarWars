@@ -29,6 +29,23 @@ class DALGuitarWar
 
 	}
 
+	public function selectAll ( )
+	{
+
+		$sql = "SELECT * FROM guitarwars ORDER BY score DESC, date ASC";
+
+		$result = $this -> con -> query ( $sql );
+
+		$guitars = [];
+
+		while ( $guitar  = $result -> fetch_object ( 'GuitarWar' ) ) {
+			$guitars[] = $guitar;
+		}
+
+		return $guitars;
+
+	}
+
 	public function save ( GuitarWar $guitar ) 
 	{
 
