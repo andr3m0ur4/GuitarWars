@@ -29,6 +29,29 @@ class DALGuitarWar
 
 	}
 
+	public function save ( GuitarWar $guitar ) 
+	{
+
+		$sql = "
+			INSERT INTO guitarwars 
+			(
+				date, name, score, screenshot
+			)
+            VALUES 
+            (
+            	NOW(),
+            	'{$guitar -> name}',
+            	'{$guitar -> score}',
+            	'{$guitar -> screenshot}'
+            )
+        ";
+
+        $this -> con -> query ( $sql );
+
+        return ( $this -> con -> affected_rows > 0 ) ? true : false;
+
+	}
+
 	public function getTotal ( $query )
 	{
 
