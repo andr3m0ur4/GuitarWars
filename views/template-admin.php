@@ -33,11 +33,11 @@
                     <td><?= $row -> date ?></td>
                     <td><?= $row -> score ?></td>
                     <td>
-                        <a href="admin.php?rota=removescore&id=<?= $row -> id ?>&amp;date=<?= $row -> date ?>&amp;name=<?= $row -> name ?>&amp;score=<?= $row -> score ?>&amp;screenshot=<?= $row -> screenshot ?>">
+                        <a href="admin.php?rota=removescore&amp;id=<?= $row -> id ?>">
                             Remover
                         </a>
                         <?php if ( $row -> approved == '0' ) : ?>
-                            / <a href="admin.php?rota=approvescore&id=<?= $row -> id ?>&amp;date=<?= $row -> date ?>&amp;name=<?= $row -> name ?>&amp;score=<?= $row -> score ?>&amp;screenshot=<?= $row -> screenshot ?>">
+                            / <a href="admin.php?rota=approvescore&amp;id=<?= $row -> id ?>">
                                 Aprovar
                             </a>
                         <?php endif; ?>

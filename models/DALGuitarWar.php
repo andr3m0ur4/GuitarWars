@@ -12,7 +12,16 @@ class DALGuitarWar
 
 	}
 
-	public function select ( )
+	public function select ( $id = 0 )
+	{
+		if ( $id > 0 ) {
+			return $this -> selectGuitar ( $id );
+		} else {
+			return $this -> selectApproved ( );
+		}
+	}
+
+	public function selectApproved ( )
 	{
 
 		$sql = "SELECT * FROM guitarwars WHERE approved = 1 ORDER BY score DESC, date ASC";
@@ -27,6 +36,17 @@ class DALGuitarWar
 
 		return $guitars;
 
+	}
+
+	public function selectGuitar ( $id )
+	{
+		$sql = "SELECT * FROM guitarwars WHERE id = $id";
+
+		$result = $this -> con -> query ( $sql );
+
+		$guitar = $result -> fetch_object ( 'GuitarWar' );
+
+		return $guitar;
 	}
 
 	public function selectAll ( )

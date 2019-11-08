@@ -41,9 +41,6 @@
                 <input type='radio' name='confirm' value='No' checked='checked' /> Não <br />
                 <button name='submit'>Enviar</button>
                 <input type='hidden' name='id' value="<?= $guitar -> id ?>" />
-                <input type='hidden' name='name' value="<?= $guitar -> name ?>" />
-                <input type='hidden' name='score' value="<?= $guitar -> score ?>" />
-                <input type='hidden' name='date' value="<?= $guitar -> date ?>" />
             </form>
         <?php endif; ?>
 

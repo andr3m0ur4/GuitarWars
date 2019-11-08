@@ -1,28 +1,20 @@
 <?php
 
-    $guitar = new GuitarWar;
-
     $error = false;
     $error_remove = false;
     $success = false;
     $form_remove = false;
 
-    if ( isset ( $_GET['id'] ) AND isset ( $_GET['date'] ) AND isset ( $_GET['name'] ) 
-        AND isset ( $_GET['score'] ) AND isset ( $_GET['screenshot'] ) ) {
+    if ( isset ( $_GET['id'] ) ) {
             
-        // Obtém os dados de pontuação do GET
-        $guitar -> id = ( int ) $_GET['id'];
-        $guitar -> date = $_GET['date'];
-        $guitar -> name = $_GET['name'];
-        $guitar -> score = $_GET['score'];
-        $guitar -> screenshot = $_GET['screenshot'];
-
-    } else if ( isset ( $_POST['id'] ) AND isset ( $_POST['name'] ) AND isset ( $_POST['score'] ) ) {
-        // Obtém os dados de pontuação do POST
-        $guitar -> id = ( int ) $_POST['id'];
-        $guitar -> name = $_POST['name'];
-        $guitar -> score = $_POST['score'];
-        $guitar -> date = $_POST['date'];
+        // Obtém o ID de pontuação do GET
+        $guitar = $dal -> select ( ( int ) $_GET['id'] );
+        
+    } else if ( isset ( $_POST['id'] ) ) {
+        
+        // Obtém o ID de pontuação do POST
+        $guitar = $dal -> select ( ( int ) $_POST['id'] );
+        
     } else {
         $error = true;
     }
